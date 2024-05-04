@@ -2,7 +2,7 @@
 	"name": "drizzle-condition",
 	"module": "index.ts",
 	"types": "index.d.ts",
-	"version": "0.0.1",
+	"version": "0.0.0",
 	"description": "An alternative, intuitive way to declare drizzle SQL conditions",
 	"type": "module",
 	"scripts": {
@@ -16,13 +16,18 @@
 		"all": "bun run tsc && bun run check && bun run test --run"
 	},
 	"devDependencies": {
+		"@auto-it/all-contributors": "^11.1.6",
+		"@auto-it/npm": "^11.1.6",
 		"@biomejs/biome": "1.7.2",
 		"@types/bun": "latest",
+		"auto": "^11.1.6",
 		"bun-plugin-dts": "^0.2.3",
 		"typescript": "^5.0.0",
 		"vitest": "^1.6.0"
 	},
 	"peerDependencies": {
 		"drizzle-orm": "^0.30.10"
-	}
+	},
+	"repository": "KaiSpencer/drizzle-condition",
+	"author": "KaiSpencer <kaispencer98@gmail.com>"
 }
