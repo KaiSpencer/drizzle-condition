@@ -13,7 +13,8 @@
 		"lint": "biome lint .",
 		"check": "biome check .",
 		"fix": "biome check . --apply-unsafe",
-		"all": "bun run tsc && bun run check && bun run test --run"
+		"all": "bun run tsc && bun run check && bun run test --run",
+		"release": "auto shipit"
 	},
 	"devDependencies": {
 		"@auto-it/all-contributors": "^11.1.6",
