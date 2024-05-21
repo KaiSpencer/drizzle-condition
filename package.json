@@ -23,6 +23,7 @@
 		"all": "bun run tsc && bun run check && bun run test --run",
 		"release": "auto shipit"
 	},
+	"files": ["dist"],
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.15.3",
 		"@auto-it/all-contributors": "^11.1.6",
