@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import { integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import { describe, expect, it } from "vitest";
 import { condition } from ".";
@@ -250,7 +250,7 @@ describe("generated conditions", () => {
 		);
 	});
 
-	it("cond and (cond and cond)", { todo: true }, () => {
+	it("cond and (cond and cond)", () => {
 		const table = sqliteTable("users", { id: integer("id") });
 		const out = condition(table.id, "==", 1).and(
 			condition(table.id, "==", 2).and(condition(table.id, "==", 3)),
@@ -258,6 +258,111 @@ describe("generated conditions", () => {
 		expect(queryAsRawString(out.generate())).toEqual(
 			queryAsRawString(
 				and(eq(table.id, 1), and(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond and (cond or cond)", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1).and(
+			condition(table.id, "==", 2).or(condition(table.id, "==", 3)),
+		);
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				and(eq(table.id, 1), or(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond or (cond and cond)", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1).or(
+			condition(table.id, "==", 2).and(condition(table.id, "==", 3)),
+		);
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				or(eq(table.id, 1), and(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond or (cond or cond)", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1).or(
+			condition(table.id, "==", 2).or(condition(table.id, "==", 3)),
+		);
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				or(eq(table.id, 1), or(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond and (cond and cond) and cond", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1)
+			.and(condition(table.id, "==", 2).and(condition(table.id, "==", 3)))
+			.and(condition(table.id, "==", 4));
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				and(eq(table.id, 1), and(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond and (cond and cond) or cond", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1)
+			.and(condition(table.id, "==", 2).and(condition(table.id, "==", 3)))
+			.or(condition(table.id, "==", 4));
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				and(eq(table.id, 1), and(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond or (cond and cond) and cond", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1)
+			.or(condition(table.id, "==", 2).and(condition(table.id, "==", 3)))
+			.and(condition(table.id, "==", 4));
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				or(eq(table.id, 1), and(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	it("cond or (cond and cond) or cond", () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1)
+			.or(condition(table.id, "==", 2).and(condition(table.id, "==", 3)))
+			.or(condition(table.id, "==", 4));
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				or(eq(table.id, 1), and(eq(table.id, 2), eq(table.id, 3))),
+			),
+		);
+	});
+
+	// TODO: support recursive conditions
+	// See comment in converters.ts "TODO: support recursive conditions"
+	it("cond and (cond or (cond and cond)) and cond", { todo: true }, () => {
+		const table = sqliteTable("users", { id: integer("id") });
+		const out = condition(table.id, "==", 1)
+			.and(
+				condition(table.id, "==", 2).or(
+					condition(table.id, "==", 3).and(condition(table.id, "==", 4)),
+				),
+			)
+			.and(condition(table.id, "==", 5));
+		expect(queryAsRawString(out.generate())).toEqual(
+			queryAsRawString(
+				and(
+					eq(table.id, 1),
+					or(eq(table.id, 2), and(eq(table.id, 3), eq(table.id, 4))),
+				),
 			),
 		);
 	});

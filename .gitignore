@@ -2,3 +2,4 @@ dist
 node_modules
 .attest
 .env
+tsconfig.vitest-temp.json

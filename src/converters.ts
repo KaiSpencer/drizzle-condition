@@ -15,6 +15,36 @@ export function convertConditionsArrayToDrizzleConditions<
 		}
 	}
 	const [condition, joiner, ...rest] = joinedConditionsOrCondition;
+
+	if (rest[0][1] === "&&" || rest[0][1] === "||") {
+		const restJoiner = rest[0][1];
+		const left = singleConditionToDrizzleCondition(rest[0][0]);
+
+		// TODO: support recursive conditions
+		if (["&&", "||"].includes(rest[0][2][1])) {
+			throw new Error("TODO: Support recursively nested conditions");
+		}
+		const right = singleConditionToDrizzleCondition(
+			rest[0][2] as Condition<TColumn1>,
+		);
+		switch (joiner) {
+			case "&&":
+				return and(
+					singleConditionToDrizzleCondition(condition),
+					// TODO: use an object and map to support more than && / ||
+					restJoiner === "&&" ? and(left, right) : or(left, right),
+				);
+			case "||":
+				return or(
+					singleConditionToDrizzleCondition(condition),
+					// TODO: use an object and map to support more than && / ||
+					restJoiner === "&&" ? and(left, right) : or(left, right),
+				);
+			default:
+				throw new Error(`Unsupported joiner ${joiner}`);
+		}
+	}
+
 	if (rest[0][1] === "==") {
 		const left = singleConditionToDrizzleCondition(condition);
 		const right = singleConditionToDrizzleCondition(rest[0]);
