@@ -1,6 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { describe, expectTypeOf, it } from "vitest";
-import { type Comparators, condition } from ".";
+import { condition, type Comparator } from ".";
 
 it("column is inferred", () => {
 	const testTable = sqliteTable("table", { id: integer("id") });
@@ -13,7 +13,7 @@ it("supported comparators", () => {
 	const testTable = sqliteTable("table", { id: integer("id") });
 	const test = condition<typeof testTable.id>;
 	expectTypeOf(condition<typeof testTable.id>).toBeFunction();
-	expectTypeOf(test).parameter(1).toEqualTypeOf<Comparators>();
+	expectTypeOf(test).parameter(1).toEqualTypeOf<Comparator>();
 });
 
 describe("sqlite column types", () => {

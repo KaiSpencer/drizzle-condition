@@ -25,6 +25,9 @@ jobs:
       - name: Verify build
         run: bun run build
 
+      - name: Check library config
+        run: bun attw --pack .
+
       - name: Run Tests
         run: bun run test
       

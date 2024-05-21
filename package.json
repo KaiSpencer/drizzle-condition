@@ -17,6 +17,7 @@
 		"release": "auto shipit"
 	},
 	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.15.3",
 		"@auto-it/all-contributors": "^11.1.6",
 		"@auto-it/npm": "^11.1.6",
 		"@biomejs/biome": "1.7.2",
