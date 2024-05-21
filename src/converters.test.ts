@@ -1,8 +1,8 @@
-import { expect, it } from "vitest";
-import { convertConditionsArrayToDrizzleConditions } from "./converters";
+import { and, eq } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { eq, and } from "drizzle-orm";
+import { expect, it } from "vitest";
 import { queryAsRawString } from "./_test-utils";
+import { convertConditionsArrayToDrizzleConditions } from "./converters";
 
 const table = sqliteTable("users", { id: integer("id"), name: text("name") });
 

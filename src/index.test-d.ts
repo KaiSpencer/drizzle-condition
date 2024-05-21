@@ -1,6 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { describe, expectTypeOf, it } from "vitest";
-import { condition, type Comparator } from ".";
+import { type Comparator, condition } from ".";
 
 it("column is inferred", () => {
 	const testTable = sqliteTable("table", { id: integer("id") });
