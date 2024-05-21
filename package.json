@@ -1,12 +1,12 @@
 {
 	"name": "drizzle-condition",
-	"main": "dist/index.js",
-	"module": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"main": "dist/index.cjs",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.mts",
 	"exports": {
 		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
 		}
 	},
 	"version": "0.0.0",
@@ -14,7 +14,7 @@
 	"type": "module",
 	"scripts": {
 		"tsc": "tsc --noEmit",
-		"build": "bun build.ts",
+		"build": "unbuild",
 		"test": "vitest",
 		"format": "biome format .",
 		"lint": "biome lint .",
@@ -32,6 +32,7 @@
 		"auto": "^11.1.6",
 		"bun-plugin-dts": "^0.2.3",
 		"typescript": "^5.0.0",
+		"unbuild": "^2.0.0",
 		"vitest": "^1.6.0"
 	},
 	"peerDependencies": {
