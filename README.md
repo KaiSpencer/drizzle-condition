@@ -63,7 +63,7 @@ Hopefully this library will make it easier for you to write queries this way too
 | notIlike         | ⏱️ todo                               |
 | not              | ⏱️ todo                               |
 | and              | condition(table.column, "==", value).and(condition(table.column, "==", value))                               |
-| or               | ⏱condition(table.column, "==", value).or(condition(table.column, "==", value))  todo                               |
+| or               | condition(table.column, "==", value).or(condition(table.column, "==", value))                                |
 | arrayContains    | ⏱️ todo                               |
 | arrayContainedIn | ⏱️ todo                               |
 | arrayOverlaps    | ⏱️ todo                               |
