@@ -9,7 +9,7 @@
 			"require": "./dist/index.cjs"
 		}
 	},
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "An alternative, intuitive way to declare drizzle SQL conditions",
 	"type": "module",
 	"scripts": {
@@ -23,7 +23,9 @@
 		"all": "bun run tsc && bun run check && bun run test --run",
 		"release": "auto shipit"
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.15.3",
 		"@auto-it/all-contributors": "^11.1.6",
