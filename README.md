@@ -27,8 +27,8 @@ const myTable = sqliteTable("my_table", {
 });
 
 const myQuery = await myDatabaseConnection.query.myTable.findMany({
-    // where: eq(myTable.id, 1), <-- drizzle-orm implementation eq, gt, lt, etc
-    where: condition(myTable.id, "==", 1),// <-- drizzle-condition implementation '==', '!=', '>', '<', '>=', '<=' etc
+    // where: and(eq(myTable.id, 1), eq(myTable.name, "John")), <-- drizzle-orm implementation eq, gt, lt, etc
+    where: condition(myTable.id, "==", 1).and(condition(myTable.name, "==", "John")), // <-- drizzle-condition implementation 
 });
 ```
 
@@ -62,8 +62,8 @@ Hopefully this library will make it easier for you to write queries this way too
 | ilike            | ⏱️ todo                               |
 | notIlike         | ⏱️ todo                               |
 | not              | ⏱️ todo                               |
-| and              | ⏱️ todo                               |
-| or               | ⏱️ todo                               |
+| and              | condition(table.column, "==", value).and(condition(table.column, "==", value))                               |
+| or               | ⏱condition(table.column, "==", value).or(condition(table.column, "==", value))  todo                               |
 | arrayContains    | ⏱️ todo                               |
 | arrayContainedIn | ⏱️ todo                               |
 | arrayOverlaps    | ⏱️ todo                               |
